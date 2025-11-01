@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề số 1</title>
+    <style>
+        body{
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        <table border="2">
+            <tr>
+                <td colspan="2">Chương trình tính tiền taxi</td>
+            </tr>
+            <tr>
+                <td>Số km đã đi được</td>
+                <td>
+                    <input type="number" name="km" required onfocusout="abc('km')">
+                </td>
+            </tr>
+            <tr>
+                <td>Tiền thanh toán</td>
+                <td><input type="number" name="tien" readonly></td>
+            </tr>
+            <tr style="text-align: center;">
+                <td colspan="2">
+                    <input type="button" name="btnCal" value="Tính" onclick="Calc()" >
+                    <input type="reset" name="btnReset" value="Xóa">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <script>
+        function Calc(){
+            let km = document.getElementsByName('km')[0].value;
+            let tien = 0;
+            if(km <= 10 ){
+                tien = km*15000;
+                document.getElementsByName('tien')[0].value = tien;
+            }
+            else if(10<km && km<50){
+                tien = 10*15000 + (km-10)*12000;
+                document.getElementsByName('tien')[0].value = tien;
+            }
+            else{
+                tien = 10*15000 + 40*12000 + (km-50)*9000;
+                document.getElementsByName('tien')[0].value = tien;
+            }
+        }
+        function abc(name){
+            var name = document.getElementsByName(name)[0].value;
+            if(name == ''){
+                alert('Không được bỏ trống');
+            }
+        }
+    </script>
+</body>
+</html>

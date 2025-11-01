@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính tiền điện</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <form action="">
+        <table>
+            <tr>
+                <td colspan="3">
+                    <h3>THANH TOÁN TIỀN ĐIỆN</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>Tên chủ hộ:</td>
+                <td>
+                    <input type="text" required id="name">
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Chỉ số cũ: </td>
+                <td>
+                    <input type="number" id="old" required onchange="kiemTra('old')">
+                </td>
+                <td>(Kw)</td>
+            </tr>
+            <tr>
+                <td>Chỉ số mới: </td>
+                <td>
+                    <input type="number" id="new" required onchange="kiemTra('new')">
+                </td>
+                <td>(Kw)</td>
+            </tr>
+            <tr>
+                <td>Đơn giá: </td>
+                <td>
+                    <input type="number" id="price" required onchange="kiemTra('price')">
+                </td>
+                <td>(VND)</td>
+            </tr>
+            <tr>
+                <td>Số tiền thanh toán: </td>
+                <td>
+                    <input type="text" id="total" readonly>
+                </td>
+                <td>(VND)</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: center;">
+                    <input type="reset" value="Xóa">
+                    <input type="button" value="Tính" onclick="tinh()">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <script>
+        function kiemTra(id){
+            let num = parseInt(document.getElementById(id).value);
+            if(num<1 || isNaN(num)){
+                alert('Vui lòng nhập lại số nguyên dương(>=1)');
+                document.getElementById(id).value = '';
+                document.getElementById(id).focus();
+                document.getElementById('total').value = '';
+                return false;
+            }
+            return true;
+        }
+        function tinh(){
+            let name = document.getElementById('name').value;
+            if(name === '' || !kiemTra('old') || !kiemTra('new') || !kiemTra('price')){
+                alert('Vui lòng nhập đầy đủ dữ liệu');
+                return;
+            }
+            let oldNum = parseInt(document.getElementById('old').value);
+            let newNUm = parseInt(document.getElementById('new').value);
+            let price = parseInt(document.getElementById('price').value);
+            if(newNUm < oldNum){
+                alert('Chỉ số mới phải lớn hơn chỉ số cũ');
+                document.getElementById('new').value = '';
+                document.getElementById('new').focus();
+                return;
+            }
+            let soDien = newNUm - oldNum ;
+            let t = 0;
+            if(soDien <= 10){
+                t = soDien * price;
+                alert('Hộ dân');
+            }
+            else if(soDien > 10 && soDien < 50 ){
+                t = 10*price + (soDien-10)*price*1.5;
+                alert('Hộ kinh doanh');
+            }
+            else{
+                t = 10*price + 40*price*1.5 + (soDien -50)*2*price;
+                alert('Hộ kinh doanh');
+
+            }
+            document.getElementById('total').value = t.toFixed(1);
+
+            /* if(soDien <=10){
+                alert('Hộ dân')
+            }
+            else{
+                alert('Hộ kinh doanh')
+            } */
+        } 
+    </script>
+</body>
+</html>

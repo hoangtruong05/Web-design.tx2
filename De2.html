@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề số 2</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh
+        }
+        td{
+            padding: 8px;
+        }
+        #tinh{
+            background-color: rgb(103, 235, 255);
+            color: white;
+            border-radius: 3px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <form action="">
+        <table border="1" >
+            <tr>
+                <td>Nhập số nguyên dương n:</td>
+                <td>
+                    <input type="number" required id="inputN" onchange="ktn('inputN')"> 
+                </td>
+            </tr>
+            <tr>
+                <td>Kết quả biểu thức:</td>
+                <td>
+                    <input type="text" readonly id="result">
+                </td>
+            </tr>
+            <tr style="text-align: center;" >
+                <td colspan="2">
+                    <input id="tinh" type="button" value="Tính" onclick="Calc()">
+                </td>
+            </tr>
+        </table>
+    </form>
+    
+    <script>
+        function ktn(id){
+           var num = parseInt(document.getElementById(id).value);
+            
+            // Kiếm tra: num phải là số nguyên, không phải NaN và >=1
+            if(num < 1 || isNaN(num)){
+                alert('Vui lòng nhập số nguyên dương (n>=1)');
+                document.getElementById(id).value = '';//xóa giá trị sai
+                document.getElementById(id).focus(); // đưa con trỏ chuột vào ô để nhập lại
+                document.getElementById('result').value = ''; // Xóa kết quả cũ
+                return false;
+            }
+            return true;
+        }
+        
+        function Calc(){
+            // Bắt buộc gọi ktn để kiểm tra tính hợp lệ trước khi tính
+            if (!ktn('inputN')) {
+                return;
+            }
+
+            let n = parseInt(document.getElementById('inputN').value);
+            let s = n; 
+            let gt = 1; 
+
+            // Tính chuỗi S = sum( (n+i) / i! )
+            for(let i = 1; i <= n; i++){
+                gt *= i; 
+                s += (n + i) / gt;
+            }
+            
+            // Hiển thị kết quả làm tròn 1 chữ số thập phân
+            document.getElementById('result').value = s.toFixed(1); 
+        }
+    </script>
+</body>
+</html>
